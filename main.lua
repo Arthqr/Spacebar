@@ -1,9 +1,9 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
     Name = "Auto Spacebar",
     LoadingTitle = "Auto Spacebar Script",
-    LoadingSubtitle = "Made by Athqr",
+    LoadingSubtitle = "Made by Arthqr",
     ConfigurationSaving = {
         Enabled = false
     },
@@ -17,28 +17,31 @@ local Tab = Window:CreateTab("Main", 4483362458)
 
 local isRunning = false
 
-local function pressSpace()
-    local VirtualInputManager = game:GetService("VirtualInputManager")
+local function autoJump()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    
     while isRunning do
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Space, false, game)
-        wait(0.1)
-        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Space, false, game)
-        wait(600) 
+        if humanoid then
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+        wait(600) -- 10 Minuten
     end
 end
 
 Tab:CreateButton({
-    Name = "Start Auto Spacebar",
+    Name = "Start Auto Jump",
     Callback = function()
         if not isRunning then
             isRunning = true
-            pressSpace()
+            autoJump()
         end
     end
 })
 
 Tab:CreateButton({
-    Name = "Stop Auto Spacebar",
+    Name = "Stop Auto Jump",
     Callback = function()
         isRunning = false
     end
