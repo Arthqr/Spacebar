@@ -1,5 +1,5 @@
 local isRunning = true
-local interval = 5
+local interval = 300
 
 local function autoJump()
     while isRunning do
